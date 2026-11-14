@@ -1,0 +1,163 @@
+/* LEGADO CÓSMICO · Antenas sobre el planeta elegido en el sistema solar 3D.
+   Capa transparente: el canvas WebGL sigue girando debajo. */
+
+.xp-layer {
+  --xp-s: 1;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s ease, visibility .4s ease;
+}
+.xp-layer.xp-open { opacity: 1; visibility: visible; }
+
+/* ---- Antenas sobre el planeta ---- */
+.xp-ships { position: absolute; inset: 0; z-index: 2; }
+.xp-ship {
+  position: absolute;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: #f1ebe0;
+  cursor: pointer;
+  padding: 4px;
+  transform: translate(-50%, -50%);
+  transition: transform .25s ease, left .3s ease, top .3s ease;
+  animation: xpAppear .6s both;
+}
+.xp-ship.xp-up { flex-direction: column-reverse; }
+.xp-ship:hover, .xp-ship:focus-visible { transform: translate(-50%, -50%) scale(1.16); outline: none; }
+.xp-ship-name {
+  font: 600 calc(9px * var(--xp-s)) Manrope, sans-serif;
+  letter-spacing: .1em;
+  white-space: nowrap;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(5, 12, 26, .78);
+  border: 1px solid rgba(130, 176, 231, .28);
+}
+.xp-ship:hover .xp-ship-name,
+.xp-ship.is-selected .xp-ship-name { border-color: #ffd58a; color: #ffe2ad; }
+.xp-ship.is-selected .xp-craft { filter: drop-shadow(0 0 12px rgba(255, 213, 138, .95)); }
+@keyframes xpAppear { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
+
+.xp-craft {
+  position: relative;
+  display: block;
+  width: 54px;
+  height: 34px;
+  zoom: var(--xp-s);
+  filter: drop-shadow(0 0 8px rgba(161, 194, 231, .7));
+}
+.xp-core {
+  position: absolute; left: 21px; top: 10px; width: 13px; height: 14px;
+  background: linear-gradient(135deg, #e7e1d5, #788da6);
+  border: 1px solid #dce7f4; transform: skewY(-12deg);
+}
+.xp-wing {
+  position: absolute; top: 12px; width: 17px; height: 10px;
+  background: repeating-linear-gradient(90deg, #315b88 0 4px, #8eb1d5 4px 5px);
+  border: 1px solid #a8c4df;
+}
+.xp-wing.xp-l { left: 0; }
+.xp-wing.xp-r { right: 0; }
+.xp-antenna { position: absolute; left: 26px; top: 0; width: 1px; height: 11px; background: #ffd58a; }
+.xp-antenna::after {
+  content: ""; position: absolute; left: -2px; top: -3px; width: 5px; height: 5px;
+  border-radius: 50%; background: #ffd58a; box-shadow: 0 0 8px #ffd58a;
+}
+.xp-ping {
+  position: absolute; left: 26px; top: 0; width: 8px; height: 8px;
+  border-radius: 50%; border: 1px solid rgba(255, 213, 138, .8);
+  translate: -50% -50%; opacity: 0;
+  animation: xpPing 2.4s ease-out infinite;
+}
+@keyframes xpPing { 0% { scale: .5; opacity: .9; } 100% { scale: 4; opacity: 0; } }
+
+/* ---- Panel de información de la antena ---- */
+.xp-detail {
+  position: absolute;
+  z-index: 6;
+  top: 66px;
+  right: 18px;
+  width: min(380px, 38%);
+  max-height: calc(100% - 84px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 22px 18px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(20, 38, 64, .94), rgba(4, 8, 18, .96));
+  border: 1px solid rgba(255, 213, 138, .34);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .55), 0 0 30px rgba(255, 190, 86, .08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(24px);
+  transition: opacity .4s ease, transform .5s ease, visibility .4s ease;
+  overflow: auto;
+}
+.xp-layer.xp-ship-open .xp-detail { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+
+.xp-x {
+  position: absolute; top: 10px; right: 12px; width: 28px; height: 28px;
+  border: 1px solid rgba(220, 224, 233, .18); border-radius: 50%;
+  background: rgba(255, 255, 255, .04); color: #d8cbb8; cursor: pointer; font-size: 12px;
+}
+.xp-x:hover { color: #ffd58a; border-color: #ffd58a; }
+
+.xp-d-head { display: flex; align-items: center; gap: 16px; padding-right: 30px; }
+.xp-detail-art { flex: none; width: 72px; height: 48px; display: grid; place-items: center; }
+.xp-detail-art .xp-craft { zoom: 1.25; }
+.xp-kicker { display: block; color: #d6bd94; font: 500 9px Manrope, sans-serif; letter-spacing: .16em; }
+.xp-detail h3 { font: 400 clamp(26px, 2.8vw, 36px)/1.05 'Cormorant Garamond', serif; margin: 6px 0 0; color: #f6efe3; }
+
+.xp-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.xp-chip {
+  font: 500 9px Manrope, sans-serif; letter-spacing: .1em; text-transform: uppercase;
+  padding: 5px 9px; border-radius: 999px; color: #c8d3e2;
+  background: rgba(130, 176, 231, .1); border: 1px solid rgba(130, 176, 231, .26);
+}
+.xp-chip-main { color: #ffe2ad; background: rgba(255, 190, 86, .12); border-color: rgba(255, 213, 138, .4); }
+
+.xp-desc { color: #cdd5e0; font-size: 13px; line-height: 1.8; margin: 0; }
+
+.xp-fact-box {
+  padding: 12px 14px; border-radius: 8px;
+  background: rgba(255, 190, 86, .07); border-left: 3px solid #d6bd94;
+}
+.xp-fact-label { display: block; color: #d6bd94; font: 600 8px Manrope, sans-serif; letter-spacing: .2em; margin-bottom: 6px; }
+.xp-fact-box p { margin: 0; color: #e6dcc8; font-size: 12px; line-height: 1.7; }
+
+.xp-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 10px; border-top: 1px solid rgba(220, 224, 233, .12);
+}
+.xp-link {
+  border: 0; background: transparent; color: #d8cbb8; cursor: pointer;
+  font: 500 9px Manrope, sans-serif; letter-spacing: .16em; padding: 6px 2px;
+}
+.xp-link:hover { color: #ffd58a; }
+.xp-dots { display: flex; gap: 6px; }
+.xp-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(220, 224, 233, .25); }
+.xp-dots i.on { background: #ffd58a; box-shadow: 0 0 8px #ffd58a; }
+
+/* El texto de ayuda original se oculta mientras hay un planeta abierto */
+.solar3d-stage.xp-active .solar3d-hint { opacity: 0; }
+
+@media (max-width: 900px) {
+  .xp-detail { width: min(340px, 44%); }
+}
+@media (max-width: 760px) {
+  .xp-detail { top: auto; left: 10px; right: 10px; bottom: 10px; width: auto; max-height: 58%; transform: translateY(24px); }
+  .xp-desc { font-size: 12px; line-height: 1.7; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .xp-ship, .xp-ping { animation: none !important; }
+  .xp-layer, .xp-detail, .xp-ship { transition: none !important; }
+}

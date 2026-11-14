@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070a12" />
+  <meta name="description" content="Legado Cósmico: explora las historias que dejaron las misiones espaciales." />
+
+  <title>LEGADO CÓSMICO — Museo espacial</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="sistema-solar.css" />
+  <link rel="stylesheet" href="explorador-planetas.css" />
+  <link rel="stylesheet" href="legado-experiencia.css" />
+  <link rel="stylesheet" href="anatomia-espacial.css" />
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script>
+</head>
+
+<body>
+
+  <div class="space-noise" aria-hidden="true"></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <div class="distant-nebula nebula-one" aria-hidden="true"></div>
+  <div class="distant-nebula nebula-two" aria-hidden="true"></div>
+
+  <div class="sun" aria-hidden="true">
+    <span></span>
+  </div>
+
+  <div class="asteroid-belt" aria-hidden="true"></div>
+
+  <header class="topbar">
+
+    <a class="brand" href="#inicio" aria-label="Legado Cósmico, inicio">
+      <span class="brand-mark">✦</span>
+      <span>LEGADO <b>CÓSMICO</b></span>
+    </a>
+
+    <nav aria-label="Navegación principal">
+      <a class="active" href="#inicio">INICIO</a>
+      <a href="#explorar">EXPLORAR</a>
+      <a href="#explorar">CUERPOS CELESTES</a>
+    </nav>
+
+    <span class="edition">
+      MUSEO VIRTUAL <i>·</i> 001
+    </span>
+
+  </header>
+
+  <main>
+
+    <section class="hero" id="inicio">
+
+      <div class="hero-copy">
+
+        <p class="eyebrow">
+          <span></span>
+          UN VIAJE POR NUESTRO VECINDARIO CÓSMICO
+        </p>
+
+        <h1>
+          LEGADO<br>
+          <em>CÓSMICO</em>
+        </h1>
+
+        <p class="tagline">
+          Las misiones terminan, pero sus descubrimientos permanecen.
+        </p>
+
+        <a class="start-button" href="#explorar">
+          Comenzar exploración <span>↗</span>
+        </a>
+
+      </div>
+
+      <div class="hero-note">
+        <span class="note-line"></span>
+        <span>01 / 03</span><br>
+        SELECCIONA UN<br>
+        DESTINO
+      </div>
+
+      <div class="orbit orbit-large" aria-hidden="true"></div>
+      <div class="orbit orbit-small" aria-hidden="true"></div>
+
+    </section>
+
+    <!-- INICIO DE NUEVA SECCIÓN: SISTEMA SOLAR 3D. No modifica ninguna tarjeta existente. -->
+    <section class="solar3d-section" id="sistema-solar" aria-label="Sistema solar tridimensional interactivo">
+      <div class="solar3d-head">
+        <div>
+          <p class="eyebrow">EL UNIVERSO EN MOVIMIENTO</p>
+          <h2>Sistema solar <em>interactivo.</em></h2>
+        </div>
+        <p class="solar3d-sub">Recorre los ocho planetas en tres dimensiones. Gira la cámara, acércate y elige tu próximo destino.</p>
+      </div>
+      <div class="solar3d-frame">
+        <div class="solar3d-stage" id="solar3d-escena">
+          <canvas id="solar3d-lienzo" aria-label="Sistema solar 3D: arrastra para girar la cámara, usa rueda del mouse para zoom y los botones de planeta para elegir destino"></canvas>
+          <div class="solar3d-toolbar">
+            <button type="button" id="solar3d-reset">↶ VISTA GENERAL</button>
+            <button type="button" id="solar3d-pause" aria-pressed="false">PAUSAR</button>
+            <button type="button" id="solar3d-speed">Velocidad ×1</button>
+            <span class="solar3d-selected" id="solar3d-selected">VISTA GENERAL</span>
+            <a id="solar3d-source" href="#" target="_blank" rel="noopener noreferrer" hidden>MODELO NASA ↗</a>
+          </div>
+          <div class="solar3d-status" id="solar3d-estado" role="status"></div>
+          <div class="solar3d-bottom"><span class="solar3d-hint">ARRASTRA PARA GIRAR · RUEDA PARA ZOOM · SELECCIONA UN PLANETA</span></div>
+        </div>
+        <div class="solar3d-planets" aria-label="Seleccionar planeta en el sistema solar">
+          <button type="button" data-solar-planet="mercurio">Mercurio</button>
+          <button type="button" data-solar-planet="venus">Venus</button>
+          <button type="button" data-solar-planet="tierra">Tierra</button>
+          <button type="button" data-solar-planet="marte">Marte</button>
+          <button type="button" data-solar-planet="jupiter">Júpiter</button>
+          <button type="button" data-solar-planet="saturno">Saturno</button>
+          <button type="button" data-solar-planet="urano">Urano</button>
+          <button type="button" data-solar-planet="neptuno">Neptuno</button>
+        </div>
+      </div>
+      <p class="solar3d-disclaimer">Visualización artística 3D · tamaños, distancias y velocidades no están a escala.</p>
+    </section>
+    <!-- FIN DE NUEVA SECCIÓN: SISTEMA SOLAR 3D -->
+
+    <section class="destinations" id="explorar">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">PRIMERA PARADA</p>
+
+          <h2>
+            Un sistema.<br>
+            <em>Infinitas historias.</em>
+          </h2>
+        </div>
+
+        <p class="section-description">
+          Ocho mundos, ocho paisajes y miles de preguntas por descubrir.
+          Elige un cuerpo celeste para comenzar tu recorrido.
+        </p>
+
+      </div>
+
+      <div class="planet-grid">
+
+        <!-- LUNA -->
+
+        <a class="planet-card moon-card"
+           href="#explorar"
+           data-planet="luna"
+           aria-label="Explorar la Luna">
+
+          <div class="planet-art">
+            <model-viewer class="preview-model" src="models/luna.glb" alt="Modelo tridimensional de luna" auto-rotate rotation-per-second="10deg" interaction-prompt="none" loading="lazy" environment-image="neutral" exposure="1.08" shadow-intensity="0" camera-orbit="25deg 75deg auto"></model-viewer>
+          </div>
+
+          <div class="planet-meta">
+            <span>01 — SATÉLITE NATURAL</span>
+            <span class="arrow">↗</span>
+          </div>
+
+          <h3>La Luna</h3>
+
+          <p>Un archivo de impactos y huellas humanas.</p>
+
+          <span class="explore-link">
+            EXPLORAR CUERPO <b>→</b>
+          </span>
+
+        </a>
+
+        <!-- TIERRA -->
+
+        <a class="planet-card earth-card"
+           href="#explorar"
+           data-planet="tierra"
+           aria-label="Explorar la Tierra">
+
+          <div class="planet-art">
+            <model-viewer class="preview-model" src="models/tierra.glb" alt="Tierra tridimensional" auto-rotate rotation-per-second="10deg" interaction-prompt="none" loading="lazy" environment-image="neutral" exposure="1.08" shadow-intensity="0" camera-orbit="25deg 75deg auto"></model-viewer>
+          </div>
+
+          <div class="planet-meta">
+            <span>02 — PLANETA ROCOSO</span>
+            <span class="arrow">↗</span>
+          </div>
+
+          <h3>La Tierra</h3>
+
+          <p>Nuestro hogar visto desde la inmensidad.</p>
+
+          <span class="explore-link">
+            EXPLORAR CUERPO <b>→</b>
+          </span>
+
+        </a>
+
+        <!-- MARTE -->
+
+        <a class="planet-card mars-card"
+           href="#explorar"
+           data-planet="marte"
+           aria-label="Explorar Marte">
+
+          <div class="planet-art">
+            <model-viewer class="preview-model" src="models/marte.glb" alt="Modelo tridimensional de marte" auto-rotate rotation-per-second="10deg" interaction-prompt="none" loading="lazy" environment-image="neutral" exposure="1.08" shadow-intensity="0" camera-orbit="25deg 75deg auto"></model-viewer>
+          </div>
+
+          <div class="planet-meta">
+            <span>03 — PLANETA ROCOSO</span>
+            <span class="arrow">↗</span>
+          </div>
+
+          <h3>Marte</h3>
+
+          <p>El planeta que seguimos intentando comprender.</p>
+
+          <span class="explore-link">
+            EXPLORAR CUERPO <b>→</b>
+          </span>
+
+        </a>
+
+
+        <!-- SATURNO / MODELO REAL 3D -->
+        <a class="planet-card saturn-card" href="#explorar" data-planet="saturno" aria-label="Explorar Saturno">
+          <div class="planet-art">
+            <model-viewer class="preview-model" src="models/saturno.glb" alt="Modelo tridimensional de Saturno"
+              auto-rotate rotation-per-second="8deg" interaction-prompt="none" loading="lazy"
+              environment-image="neutral" exposure="1.15" camera-orbit="15deg 67deg auto"></model-viewer>
+          </div>
+          <div class="planet-meta"><span>04 — GIGANTE GASEOSO</span><span class="arrow">↗</span></div>
+          <h3>Saturno</h3>
+          <p>Un mundo de anillos.</p>
+          <span class="explore-link">EXPLORAR CUERPO <b>→</b></span>
+        </a>
+
+<!-- VENUS -->
+<a class="planet-card" href="#explorar"
+   data-planet="venus">
+  <div class="planet-art">
+    <model-viewer class="preview-model"
+      src="models/venus.glb"
+      auto-rotate
+      rotation-per-second="10deg"
+      interaction-prompt="none"
+      environment-image="neutral"
+      exposure="1.15">
+    </model-viewer>
+  </div>
+  <div class="planet-meta">
+    <span>05 — PLANETA ROCOSO</span>
+    <span class="arrow">↗</span>
+  </div>
+  <h3>Venus</h3>
+  <span class="explore-link">EXPLORAR CUERPO →</span>
+</a>
+
+<!-- JUPITER -->
+<a class="planet-card" href="#explorar"
+   data-planet="jupiter">
+  <div class="planet-art">
+    <model-viewer class="preview-model"
+      src="models/jupiter.glb"
+      auto-rotate
+      rotation-per-second="10deg"
+      interaction-prompt="none"
+      environment-image="neutral"
+      exposure="1.15">
+    </model-viewer>
+  </div>
+  <div class="planet-meta">
+    <span>06 — GIGANTE GASEOSO</span>
+    <span class="arrow">↗</span>
+  </div>
+  <h3>Júpiter</h3>
+  <span class="explore-link">EXPLORAR CUERPO →</span>
+</a>
+
+<!-- URANO -->
+<a class="planet-card" href="#explorar"
+   data-planet="urano">
+  <div class="planet-art">
+    <model-viewer class="preview-model"
+      src="models/urano.glb"
+      auto-rotate
+      rotation-per-second="10deg"
+      interaction-prompt="none"
+      environment-image="neutral"
+      exposure="1.15">
+    </model-viewer>
+  </div>
+  <div class="planet-meta">
+    <span>07 — GIGANTE HELADO</span>
+    <span class="arrow">↗</span>
+  </div>
+  <h3>Urano</h3>
+  <span class="explore-link">EXPLORAR CUERPO →</span>
+</a>
+
+<!-- NEPTUNO -->
+<a class="planet-card" href="#explorar"
+   data-planet="neptuno">
+  <div class="planet-art">
+    <model-viewer class="preview-model"
+      src="models/neptuno.glb"
+      auto-rotate
+      rotation-per-second="10deg"
+      interaction-prompt="none"
+      environment-image="neutral"
+      exposure="1.15">
+    </model-viewer>
+  </div>
+  <div class="planet-meta">
+    <span>08 — GIGANTE HELADO</span>
+    <span class="arrow">↗</span>
+  </div>
+  <h3>Neptuno</h3>
+  <span class="explore-link">EXPLORAR CUERPO →</span>
+</a>
+
+      </div>
+
+      <p class="scroll-hint">
+        <span>↓</span>
+        DESPLÁZATE PARA DESCUBRIR
+      </p>
+
+    </section>
+
+    <!-- VISOR DE MODELOS 3D. Sin paneles de información ni imágenes 2D. -->
+    <section class="vehicles-section" id="vehiculos" aria-label="Modelos 3D de naves y vehículos">
+      <div class="section-heading"><div>
+        <p class="eyebrow">MODELOS 3D</p>
+        <h2>Naves y <em>rovers.</em></h2>
+      </div></div>
+      <div class="planet-grid vehicle-grid">
+        <button class="planet-card vehicle-card" type="button" data-model="opportunity" aria-label="Abrir rover Opportunity en 3D">
+          <div class="planet-art"><model-viewer class="preview-model nasa-remote" src="models/opportunity.glb" data-fallback="models/opportunity-demo.glb" alt="Modelo NASA 3D de Opportunity" auto-rotate rotation-per-second="9deg" interaction-prompt="none" loading="lazy" environment-image="neutral" exposure="1.24" shadow-intensity="0" camera-orbit="26deg 68deg auto" camera-target="auto auto auto"></model-viewer></div>
+          <div class="planet-meta"><span>ROVER</span><span class="arrow">↗</span></div>
+          <h3>Opportunity</h3>
+          <span class="explore-link">VER EN 360° <b>→</b></span>
+        </button>
+        <button class="planet-card vehicle-card" type="button" data-model="cassini" aria-label="Abrir nave Cassini en 3D">
+          <div class="planet-art"><model-viewer class="preview-model nasa-remote" src="models/cassini.glb" data-fallback="models/cassini-demo.glb" alt="Modelo NASA 3D de Cassini" auto-rotate rotation-per-second="9deg" interaction-prompt="none" loading="lazy" environment-image="neutral" exposure="1.24" shadow-intensity="0" camera-orbit="26deg 68deg auto" camera-target="auto auto auto"></model-viewer></div>
+          <div class="planet-meta"><span>SONDA ESPACIAL</span><span class="arrow">↗</span></div>
+          <h3>Cassini</h3>
+          <span class="explore-link">VER EN 360° <b>→</b></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Modal de visualización: contiene ÚNICAMENTE el modelo 3D y los controles básicos. -->
+    <div class="model-overlay" id="model-overlay" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Visor espacial 3D">
+      <div class="model-backdrop" data-close-viewer="true"></div>
+      <div class="model-stage" role="document">
+        <div class="model-bar">
+          <button type="button" class="model-back" id="model-back">← VOLVER</button>
+          <h2 id="model-title">MODELO 3D</h2>
+          <div class="view-actions">
+            <button type="button" class="model-toggle" id="model-toggle" hidden aria-label="Cambiar entre vista NASA y 3D transparente">FONDO TRANSPARENTE</button>
+            <button type="button" class="model-close" id="model-close" aria-label="Cerrar visor">✕</button>
+          </div>
+        </div>
+        <model-viewer id="focus-model" camera-controls auto-rotate rotation-per-second="6deg"
+          interaction-prompt="none" environment-image="neutral" exposure="1.3"
+          shadow-intensity="0" touch-action="pan-y" loading="lazy"
+          alt="Modelo interactivo tridimensional"></model-viewer>
+        <!-- NASA embebido en vista ampliada. El visor es externo y conserva sus propias condiciones de carga. -->
+        <div class="nasa-planet-stage" id="nasa-planet-stage" hidden></div>
+        <div class="model-controls">ARRASTRA PARA GIRAR <span>·</span> DESLIZA PARA ACERCAR</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+
+    <span>LEGADO CÓSMICO</span>
+
+    <span>
+      UNA EXPERIENCIA EDUCATIVA · NASA SPACE APPS CHALLENGE
+    </span>
+
+    <span>
+      HECHO PARA EXPLORAR <b>✦</b>
+    </span>
+
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script src="sistema-solar.js" defer></script>
+  <script src="explorador-planetas.js" defer></script>
+  <script src="legado-experiencia.js" defer></script>
+  <script src="anatomia-espacial.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+
+/* =========================================
+   LEGADO CÓSMICO
+   SISTEMA SOLAR INTERACTIVO 3D
+   ========================================= */
+
+/* SECCIÓN PRINCIPAL */
+
+.solar3d-section {
+  position: relative;
+  isolation: isolate;
+  padding: 90px max(5vw, 20px) 112px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(9, 17, 32, 0.45) 17%,
+    rgba(9, 17, 32, 0.65) 84%,
+    transparent 100%
+  );
+  color: #e7e0d3;
+}
+
+/* ENCABEZADO */
+
+.solar3d-head {
+  max-width: 1250px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.solar3d-head h2 {
+  font: 400 clamp(46px, 5.8vw, 78px)/0.95
+    'Cormorant Garamond', serif;
+  letter-spacing: 0.003em;
+  margin: 12px 0 0;
+}
+
+.solar3d-head h2 em {
+  font-weight: 400;
+  color: #e1c6a1;
+}
+
+.solar3d-head .eyebrow {
+  margin: 0;
+}
+
+.solar3d-sub {
+  font: 400 12px/1.8 Manrope, Arial, sans-serif;
+  color: #bcc8dc;
+  max-width: 300px;
+  margin: 0;
+}
+
+/* CONTENEDOR DEL SISTEMA SOLAR */
+
+.solar3d-frame {
+  max-width: 1250px;
+  margin: 0 auto;
+  border: 1px solid rgba(164, 192, 234, 0.32);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    #192e4a 0%,
+    #0d1a30 48%,
+    #050916 100%
+  );
+
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.34),
+    0 0 40px rgba(59, 119, 206, 0.10);
+}
+
+/* DEGRADADO SUAVE */
+
+.solar3d-frame::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    0deg,
+    rgba(5, 8, 15, 0.08),
+    transparent 25%,
+    transparent 85%,
+    rgba(5, 8, 15, 0.06)
+  );
+
+  z-index: 1;
+}
+
+/* ELIMINAR SEGUNDA CAPA OSCURA */
+
+.solar3d-frame::after {
+  display: none;
+}
+
+/* ESCENA INTERACTIVA */
+
+.solar3d-stage {
+  position: relative;
+  height: clamp(450px, 53vw, 660px);
+  width: 100%;
+  overflow: hidden;
+}
+
+/* LIENZO 3D */
+
+#solar3d-lienzo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+  display: block;
+  z-index: 0;
+  outline: none;
+}
+
+#solar3d-lienzo:active {
+  cursor: grabbing;
+}
+
+/* BARRA DE HERRAMIENTAS */
+
+.solar3d-toolbar {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  right: 22px;
+  z-index: 5;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+
+/* ESTILOS GENERALES DE CONTROLES */
+
+.solar3d-toolbar button,
+.solar3d-toolbar a,
+.solar3d-planets button,
+.solar3d-label {
+  font-family: Manrope, Arial, sans-serif;
+
+  border: 1px solid rgba(180, 210, 255, 0.30);
+  background: rgba(11, 24, 43, 0.78);
+  color: #e7eaf2;
+
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+
+/* BOTONES SUPERIORES */
+
+.solar3d-toolbar button {
+  padding: 11px 14px;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  border-radius: 4px;
+}
+
+/* EFECTOS HOVER */
+
+.solar3d-toolbar button:hover,
+.solar3d-planets button:hover,
+.solar3d-label:hover {
+  border-color: #77caff;
+  color: #ffffff;
+  background: rgba(32, 70, 112, 0.92);
+
+  box-shadow:
+    0 0 15px rgba(64, 153, 255, 0.22);
+}
+
+/* PLANETA SELECCIONADO */
+
+.solar3d-toolbar .solar3d-selected {
+  margin-left: auto;
+  color: #f1d3a7;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-align: right;
+  padding-right: 6px;
+  pointer-events: none;
+}
+
+/* ETIQUETAS DE LOS PLANETAS */
+
+.solar3d-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+
+  border: 1px solid rgba(130, 176, 231, 0.22);
+  background: rgba(8, 22, 42, 0.82);
+
+  font-size: 9px;
+  letter-spacing: 0.03em;
+  color: #dce9fa;
+
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ETIQUETA AL PASAR EL MOUSE */
+
+.solar3d-label:hover,
+.solar3d-label.hovered {
+  background: rgba(45, 105, 167, 0.95);
+  color: white;
+  border-color: #77caff;
+
+  box-shadow:
+    0 0 18px rgba(80, 170, 255, 0.50);
+}
+
+/* ETIQUETA ACTIVA */
+
+.solar3d-label.active {
+  background: rgba(153, 110, 53, 0.92);
+  color: #ffffff;
+  border: 1px solid #ffd58a;
+
+  box-shadow:
+    0 0 17px rgba(255, 190, 86, 0.40);
+}
+
+.solar3d-label[hidden] {
+  display: none;
+}
+
+/* PARTE INFERIOR DE LA ESCENA */
+
+.solar3d-bottom {
+  position: absolute;
+  bottom: 18px;
+  left: 22px;
+  right: 22px;
+  z-index: 5;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+
+  pointer-events: none;
+}
+
+/* INSTRUCCIONES */
+
+.solar3d-hint {
+  font-size: 10px;
+  line-height: 1.7;
+  letter-spacing: 0.08em;
+  color: #d1dcf1;
+
+  text-shadow: 0 1px 12px #000;
+  max-width: 410px;
+}
+
+/* ENLACES SUPERIORES */
+
+.solar3d-toolbar a {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 4px;
+}
+
+.solar3d-toolbar a[hidden] {
+  display: none;
+}
+
+/* SELECTOR INFERIOR DE PLANETAS */
+
+.solar3d-planets {
+  padding: 15px 17px 13px;
+
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  flex-wrap: wrap;
+
+  border-top: 1px solid rgba(151, 192, 244, 0.24);
+  position: relative;
+  z-index: 5;
+
+  background: rgba(8, 19, 36, 0.85);
+}
+
+.solar3d-planets button {
+  padding: 8px 11px;
+  font-size: 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* PLANETA ACTIVO EN EL SELECTOR */
+
+.solar3d-planets button.active {
+  background: rgba(215, 185, 139, 0.22);
+  border-color: #f0c98d;
+  color: #ffe2ae;
+
+  box-shadow:
+    0 0 12px rgba(255, 198, 105, 0.16);
+}
+
+/* AVISO INFERIOR */
+
+.solar3d-disclaimer {
+  max-width: 1250px;
+  margin: 15px auto 0;
+  text-align: right;
+
+  font-size: 10px;
+  line-height: 1.6;
+  color: #9daac0;
+}
+
+/* ESTADOS DE ERROR */
+
+.solar3d-error #solar3d-lienzo {
+  display: none;
+}
+
+.solar3d-status {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  color: #eed3ab;
+  font-size: 14px;
+  text-align: center;
+  max-width: 280px;
+  pointer-events: none;
+}
+
+.solar3d-status:empty {
+  display: none;
+}
+
+/* DISEÑO PARA CELULARES */
+
+@media (max-width: 750px) {
+  .solar3d-section {
+    padding: 65px 3vw 64px;
+  }
+
+  .solar3d-head {
+    display: block;
+    padding: 0 12px;
+  }
+
+  .solar3d-sub {
+    margin-top: 14px;
+  }
+
+  .solar3d-stage {
+    height: 530px;
+  }
+
+  .solar3d-toolbar {
+    left: 12px;
+    right: 12px;
+    top: 12px;
+    gap: 5px;
+  }
+
+  .solar3d-toolbar button {
+    padding: 9px;
+    font-size: 9px;
+  }
+
+  .solar3d-toolbar .solar3d-selected {
+    margin-left: 0;
+    font-size: 9px;
+    padding: 8px 0;
+  }
+
+  .solar3d-bottom {
+    bottom: 14px;
+    left: 12px;
+    right: 12px;
+  }
+
+  .solar3d-hint {
+    font-size: 9px;
+  }
+
+  .solar3d-label {
+    font-size: 8px;
+    padding: 3px 5px;
+  }
+
+  .solar3d-planets {
+    padding: 13px 9px;
+    gap: 5px;
+  }
+
+  .solar3d-planets button {
+    font-size: 9px;
+    padding: 7px 9px;
+  }
+
+  .solar3d-disclaimer {
+    text-align: center;
+    padding: 0 12px;
+  }
+}
+
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+  .solar3d-toolbar button,
+  .solar3d-planets button,
+  .solar3d-label {
+    transition: none;
+  }
+}
